@@ -17,7 +17,7 @@ import (
 	"regexp"
 )
 
-// The UUID reserved variants. 
+// The UUID reserved variants.
 const (
 	ReservedNCS       byte = 0x80
 	ReservedRFC4122   byte = 0x40
@@ -30,15 +30,14 @@ var (
 	NamespaceDNS, _  = ParseHex("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
 	NamespaceURL, _  = ParseHex("6ba7b811-9dad-11d1-80b4-00c04fd430c8")
 	NamespaceOID, _  = ParseHex("6ba7b812-9dad-11d1-80b4-00c04fd430c8")
-	NamespaceX500, _ = ParseHex("6ba7b814-9dad-11d1-80b4-00c04fd430c8")	
+	NamespaceX500, _ = ParseHex("6ba7b814-9dad-11d1-80b4-00c04fd430c8")
 )
 
 // Pattern used to parse hex string representation of the UUID.
 // FIXME: do something to consider both brackets at one time,
 // current one allows to parse string with only one opening
 // or closing bracket.
-const hexPattern =
-	"^(urn\\:uuid\\:)?\\{?([a-z0-9]{8})-([a-z0-9]{4})-" +
+const hexPattern = "^(urn\\:uuid\\:)?\\{?([a-z0-9]{8})-([a-z0-9]{4})-" +
 	"([1-5][a-z0-9]{3})-([a-z0-9]{4})-([a-z0-9]{12})\\}?$"
 
 // A UUID representation copmliant with specification in
@@ -67,14 +66,14 @@ func ParseHex(s string) (u *UUID, err error) {
 	}
 	u = new(UUID)
 	copy(u[:], b)
-	return 
+	return
 }
 
 // Parse creates a UUID object from given bytes slice.
 func Parse(b []byte) (u *UUID, err error) {
 	if len(b) != 16 {
 		err = errors.New("Given slice is not valid UUID sequence")
-		return 
+		return
 	}
 	u = new(UUID)
 	copy(u[:], b)
@@ -146,13 +145,13 @@ func (u *UUID) setVariant(v byte) {
 // layout of the UUID. This will be one of the constants: RESERVED_NCS,
 // RFC_4122, RESERVED_MICROSOFT, RESERVED_FUTURE.
 func (u *UUID) Variant() byte {
-	if u[8] & ReservedNCS == ReservedNCS {
+	if u[8]&ReservedNCS == ReservedNCS {
 		return ReservedNCS
-	} else if u[8] & ReservedRFC4122 == ReservedRFC4122 {
+	} else if u[8]&ReservedRFC4122 == ReservedRFC4122 {
 		return ReservedRFC4122
-	} else if u[8] & ReservedMicrosoft == ReservedMicrosoft {
+	} else if u[8]&ReservedMicrosoft == ReservedMicrosoft {
 		return ReservedMicrosoft
-	} 
+	}
 	return ReservedFuture
 }
 
