@@ -142,3 +142,23 @@ func TestMarshalJSON(t *testing.T) {
 		t.Errorf("Expected marshalled json string to be the quoted version of the original string, json string %s != original string \"%s\"", jsonString, str)
 	}
 }
+
+func TestMarshalJSONValue(t *testing.T) {
+	str := "426af4e2-3f13-46e0-45ae-0dd5941536b6"
+	u, err := ParseHex(str)
+	if err != nil {
+		t.Errorf("Expected to generate UUID without problems, error thrown: %d", err.Error())
+		return
+	}
+
+	jsonBytes, err := json.Marshal(*u)
+	if err != nil {
+		t.Errorf("Expected to marshal json without problems, error thrown: %d", err.Error())
+		return
+	}
+
+	jsonString := string(jsonBytes)
+	if jsonString != ("\"" + str + "\"") {
+		t.Errorf("Expected marshalled json string to be the quoted version of the original string, json string %s != original string \"%s\"", jsonString, str)
+	}
+}
