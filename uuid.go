@@ -6,14 +6,15 @@
 package uuid
 
 import (
-	"errors"
-	"crypto/rand"
 	"crypto/md5"
+	"crypto/rand"
 	"crypto/sha1"
 	"encoding/hex"
-	"regexp"
-	"hash"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"hash"
+	"regexp"
 )
 
 // The UUID reserved variants. 
@@ -170,4 +171,8 @@ func (u *UUID) Version() uint {
 // Returns unparsed version of the generated UUID sequence.
 func (u *UUID) String() string {
 	return fmt.Sprintf("%x-%x-%x-%x-%x", u[0:4], u[4:6], u[6:8], u[8:10], u[10:])
+}
+
+func (u *UUID) MarshalJSON() ([]byte, error) {
+	return json.Marshal(u.String())
 }
